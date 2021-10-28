@@ -1,14 +1,14 @@
 const Producer = require("./src/Producer");
-const RingBuffer = require("./src/RingBuffer");
+const BoundedQueue = require("./src/BoundedQueue");
 const Sink = require("./src/Sink");
 const Worker = require("./src/Worker");
 
-const ringBuffer1 = new RingBuffer({
+const ringBuffer1 = new BoundedQueue({
     name: "ring_buffer1",
     capacity: 5,
 });
 
-const ringBuffer2 = new RingBuffer({
+const ringBuffer2 = new BoundedQueue({
     name: "ring_buffer2",
     capacity: 5,
 });
