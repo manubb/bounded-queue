@@ -13,24 +13,22 @@ class BoundedQueue {
     }
 
     push(data) {
-        const pushPromise = new Promise((resolve) =>
+        return new Promise((resolve) => {
             this.producerCallbacks.enqueue(() => {
                 resolve();
                 return data;
-            })
-        );
-        this.updateState();
-        return pushPromise;
+            });
+            this.updateState();
+        });
     }
 
     pull() {
-        const pullPromise = new Promise((resolve) =>
+        return new Promise((resolve) => {
             this.consumerCallbacks.enqueue((data) => {
                 resolve(data);
-            })
-        );
-        this.updateState();
-        return pullPromise;
+            });
+            this.updateState();
+        });
     }
 
     satisfyOldestConsumer() {
