@@ -6,7 +6,6 @@ class Worker {
         this.input = input;
         this.output = output;
         this.processingDuration = processingDuration;
-        this.start();
     }
 
     async start() {
