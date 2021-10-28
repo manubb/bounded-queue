@@ -1,5 +1,5 @@
-const Producer = require("./src/Producer");
 const BoundedQueue = require("./src/BoundedQueue");
+const Producer = require("./src/Producer");
 const Sink = require("./src/Sink");
 const Worker = require("./src/Worker");
 
