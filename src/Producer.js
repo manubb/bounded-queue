@@ -23,11 +23,11 @@ class Producer {
         console.log(this.name, "pushes", data, "to", this.output.name);
         await this.output.push(data);
         console.log(
-            this.output.name,
-            "has acknowledged reception of",
+            this.name,
+            "has pushed",
             data,
             "to",
-            this.name
+            this.output.name
         );
 
         return this.emitData(dataCount - 1);
