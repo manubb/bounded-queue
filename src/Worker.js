@@ -23,6 +23,7 @@ class Worker {
             "to",
             this.name
         );
+
         return this.start();
     }
 }

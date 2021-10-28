@@ -29,6 +29,7 @@ class Producer {
             "to",
             this.name
         );
+
         return this.emitData(dataCount - 1);
     }
 }
