@@ -33,24 +33,16 @@ class BoundedQueue {
 
     satisfyOldestConsumer() {
         const data = this.ringBuffer.deq();
-        console.log(
-            data,
-            "has been dequeued from",
-            this.name,
-            `(${this.ringBuffer.size()})`
-        );
+        const size = `(size: ${this.ringBuffer.size()})`;
+        console.log(this.name, "has dequeued", data, size);
         this.consumerCallbacks.dequeue()(data);
     }
 
     satisfyOldestProducer() {
         const data = this.producerCallbacks.dequeue()();
         this.ringBuffer.enq(data);
-        console.log(
-            data,
-            "has been enqueued in",
-            this.name,
-            `(${this.ringBuffer.size()})`
-        );
+        const size = `(size: ${this.ringBuffer.size()})`;
+        console.log(this.name, "has enqueued", data, size);
     }
 
     updateState() {
