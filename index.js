@@ -27,7 +27,7 @@ new Worker({
     processingDuration: 10,
 }).start();
 
-const sink = new Sink({name: "the_sink"});
+const sink = new Sink({ name: "the_sink" });
 
 new Worker({
     name: "consumer1",

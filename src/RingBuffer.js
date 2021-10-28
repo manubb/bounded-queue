@@ -35,14 +35,24 @@ class RingBuffer {
 
     satisfyOldestConsumer() {
         const data = this.ringBuffer.deq();
-        console.log(data, "has been dequeued from", this.name, `(${this.ringBuffer.size()})`);
+        console.log(
+            data,
+            "has been dequeued from",
+            this.name,
+            `(${this.ringBuffer.size()})`
+        );
         this.consumerCallbacks.dequeue()(data);
     }
 
     satisfyOldestProducer() {
         const data = this.producerCallbacks.dequeue()();
         this.ringBuffer.enq(data);
-        console.log(data, "has been enqueued in", this.name, `(${this.ringBuffer.size()})`);
+        console.log(
+            data,
+            "has been enqueued in",
+            this.name,
+            `(${this.ringBuffer.size()})`
+        );
     }
 
     updateState() {
