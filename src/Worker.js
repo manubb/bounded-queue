@@ -16,13 +16,7 @@ class Worker {
         await sleep(this.processingDuration);
         console.log(this.name, "pushes", data, "to", this.output.name);
         await this.output.push(data);
-        console.log(
-            this.name,
-            "has pushed",
-            data,
-            "to",
-            this.output.name
-        );
+        console.log(this.name, "has pushed", data, "to", this.output.name);
 
         return this.start();
     }
