@@ -2,9 +2,9 @@ const Queue = require("queue-fifo");
 const RingBufferJS = require("ringbufferjs");
 
 class BoundedQueue {
-    // A passive ring buffer:
-    // - Producers need to push their data to the buffer
-    // - Consumers need to pull data from the buffer
+    // A passive bounded waiting queue:
+    // - Producers need to push their data to the queue
+    // - Consumers need to pull data from the queue
     constructor({ name, capacity }) {
         this.name = name;
         this.ringBuffer = new RingBufferJS(capacity);
