@@ -18,16 +18,14 @@ class BoundedQueue {
                 resolve();
                 return data;
             });
-            this.updateState();
+            this.onEnqueuedProducerCallback();
         });
     }
 
     pull() {
         return new Promise((resolve) => {
-            this.consumerCallbacks.enqueue((data) => {
-                resolve(data);
-            });
-            this.updateState();
+            this.consumerCallbacks.enqueue(resolve);
+            this.onEnqueuedConsumerCallback();
         });
     }
 
@@ -45,20 +43,20 @@ class BoundedQueue {
         console.log(this.name, "has enqueued", data, size);
     }
 
-    updateState() {
-        // We eagerly satisfy as many consumers and producers as possible:
-        while (
-            !this.consumerCallbacks.isEmpty() &&
-            !this.ringBuffer.isEmpty()
-        ) {
-            this.satisfyOldestConsumer();
-        }
-
-        while (!this.producerCallbacks.isEmpty() && !this.ringBuffer.isFull()) {
+    onEnqueuedProducerCallback() {
+        if (!this.ringBuffer.isFull()) {
             this.satisfyOldestProducer();
-            // The buffer is not empty now and we can satisfy a consumer
             if (!this.consumerCallbacks.isEmpty()) {
                 this.satisfyOldestConsumer();
+            }
+        }
+    }
+
+    onEnqueuedConsumerCallback() {
+        if (!this.ringBuffer.isEmpty()) {
+            this.satisfyOldestConsumer();
+            if (!this.producerCallbacks.isEmpty()) {
+                this.satisfyOldestProducer();
             }
         }
     }
