@@ -1,5 +1,5 @@
 const Queue = require("queue-fifo");
-const RingBufferJS = require("ringbufferjs");
+const RingBuffer = require("ringbufferjs");
 
 class BoundedQueue {
     // A passive bounded waiting queue:
@@ -7,7 +7,7 @@ class BoundedQueue {
     // - Consumers need to pull data from the queue
     constructor({ name, capacity }) {
         this.name = name;
-        this.ringBuffer = new RingBufferJS(capacity);
+        this.ringBuffer = new RingBuffer(capacity);
         this.producerCallbacks = new Queue();
         this.consumerCallbacks = new Queue();
     }
