@@ -1,8 +1,8 @@
 const { expose, Transfer } = require("threads/worker");
 const Jimp = require("jimp");
 
-const processImage = ({ id, payload }) => {
-    return Jimp.read(payload)
+const processImage = ({ id, payload }) =>
+    Jimp.read(payload)
         .then((image) =>
             image
                 .greyscale()
@@ -13,8 +13,6 @@ const processImage = ({ id, payload }) => {
         )
         .then((typedArray) =>
             Transfer({ id, payload: typedArray }, [typedArray.buffer])
-        )
-        .catch((err) => console.error(err));
-};
+        );
 
 expose(processImage);
