@@ -1,15 +1,8 @@
-const { sleep } = require("./utils");
-
-const dataGenerator = (() => {
-    let dataId = 0;
-    return () => ++dataId;
-})();
-
 class Producer {
-    constructor({ name, output, processingDuration }) {
+    constructor({ name, output, process }) {
         this.name = name;
         this.output = output;
-        this.processingDuration = processingDuration;
+        this.process = process;
     }
 
     async emitData(dataCount) {
@@ -17,12 +10,10 @@ class Producer {
             return;
         }
 
-        const data = dataGenerator();
-        // simulate a data processing:
-        await sleep(this.processingDuration);
-        console.log(this.name, "pushes", data, "to", this.output.name);
+        const data = await this.process();
+        console.log(this.name, "pushes", data.id, "to", this.output.name);
         await this.output.push(data);
-        console.log(this.name, "has pushed", data, "to", this.output.name);
+        console.log(this.name, "has pushed", data.id, "to", this.output.name);
 
         return this.emitData(dataCount - 1);
     }

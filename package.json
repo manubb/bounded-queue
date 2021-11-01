@@ -1,6 +1,9 @@
 {
   "dependencies": {
+    "jimp": "^0.16.1",
+    "needle": "^3.0.0",
     "queue-fifo": "^0.2.6",
-    "ringbufferjs": "^2.0.0"
+    "ringbufferjs": "^2.0.0",
+    "threads": "^1.7.0"
   }
 }

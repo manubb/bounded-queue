@@ -8,6 +8,14 @@ npm i
 
 ## Run demo
 
+Basic demo:
+
 ```bash
-node index.js
+node index
+```
+
+Fetch and process random images using worker threads:
+
+```bash
+node imagePipeline
 ```
