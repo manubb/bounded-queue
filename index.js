@@ -58,17 +58,14 @@ new Worker({
     process: (data) => sleep(50).then(() => data),
 }).start();
 
-const producer1 = new Producer({
+new Producer({
     name: "producer1",
     output: queue1,
     process: () => sleep(6).then(() => ({ id: dataIdGenerator() })),
-});
+}).emitData(20);
 
-const producer2 = new Producer({
+new Producer({
     name: "producer2",
     output: queue1,
     process: () => sleep(5).then(() => ({ id: dataIdGenerator() })),
-});
-
-producer1.emitData(20);
-producer2.emitData(20);
+}).emitData(20);
