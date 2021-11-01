@@ -19,69 +19,61 @@ const queue2 = new BoundedQueue({
     capacity: 5,
 });
 
-spawn(new ThreadWorker("./src/workers/processImage")).then((processImage) => {
-    const process = (data) => processImage(Transfer(data, [data.payload]));
-
+spawn(new ThreadWorker("./src/workers/processImage")).then((processImage) =>
     new Worker({
         name: "inner1",
         input: queue1,
         output: queue2,
-        process,
-    }).start();
-});
+        process: (data) => processImage(Transfer(data, [data.payload])),
+    }).start()
+);
 
-spawn(new ThreadWorker("./src/workers/processImage")).then((processImage) => {
-    const process = (data) => processImage(Transfer(data, [data.payload]));
-
-    return new Worker({
+spawn(new ThreadWorker("./src/workers/processImage")).then((processImage) =>
+    new Worker({
         name: "inner2",
         input: queue1,
         output: queue2,
-        process,
-    }).start();
-});
+        process: (data) => processImage(Transfer(data, [data.payload])),
+    }).start()
+);
 
 const sink = new Sink({ name: "the_sink" });
 
-spawn(new ThreadWorker("./src/workers/saveImage")).then((saveImage) => {
-    const process = (data) => saveImage(Transfer(data, [data.payload.buffer]));
+spawn(new ThreadWorker("./src/workers/saveImage")).then((saveImage) =>
     new Worker({
         name: "consumer1",
         input: queue2,
         output: sink,
-        process,
-    }).start();
-});
+        process: (data) => saveImage(Transfer(data, [data.payload.buffer])),
+    }).start()
+);
 
-spawn(new ThreadWorker("./src/workers/saveImage")).then((saveImage) => {
-    const process = (data) => saveImage(Transfer(data, [data.payload.buffer]));
+spawn(new ThreadWorker("./src/workers/saveImage")).then((saveImage) =>
     new Worker({
         name: "consumer2",
         input: queue2,
         output: sink,
-        process,
-    }).start();
-});
+        process: (data) => saveImage(Transfer(data, [data.payload.buffer])),
+    }).start()
+);
 
-spawn(new ThreadWorker("./src/workers/saveImage")).then((saveImage) => {
-    const process = (data) => saveImage(Transfer(data, [data.payload.buffer]));
+spawn(new ThreadWorker("./src/workers/saveImage")).then((saveImage) =>
     new Worker({
         name: "consumer3",
         input: queue2,
         output: sink,
-        process,
-    }).start();
-});
+        process: (data) => saveImage(Transfer(data, [data.payload.buffer])),
+    }).start()
+);
 
-spawn(new ThreadWorker("./src/workers/saveImage")).then((saveImage) => {
-    const process = (data) => saveImage(Transfer(data, [data.payload.buffer]));
+spawn(new ThreadWorker("./src/workers/saveImage")).then((saveImage) =>
     new Worker({
         name: "consumer4",
         input: queue2,
         output: sink,
-        process,
-    }).start();
-});
+        process: (data) => saveImage(Transfer(data, [data.payload.buffer])),
+    }).start()
+);
 
 spawn(new ThreadWorker("./src/workers/fetchImage")).then((fetchImage) =>
     new Producer({
