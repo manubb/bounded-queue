@@ -1,5 +1,5 @@
 const { expose, Transfer } = require("threads/worker");
-const Jimp = require("jimp");
+const { Jimp } = require("jimp");
 
 const processImage = ({ id, payload }) =>
     Jimp.read(payload)
@@ -7,9 +7,8 @@ const processImage = ({ id, payload }) =>
             image
                 .greyscale()
                 .sepia()
-                .cover(1280, 720)
-                .quality(60)
-                .getBufferAsync(Jimp.AUTO)
+                .cover({ w: 1280, h: 720 })
+                .getBuffer("image/jpeg", { quality: 60 })
         )
         .then((typedArray) =>
             Transfer({ id, payload: typedArray }, [typedArray.buffer])
